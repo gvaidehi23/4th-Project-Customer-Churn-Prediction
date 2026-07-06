@@ -152,6 +152,11 @@ if Press:
     'PaymentMethod', 'MonthlyCharges', 'TotalCharges']
     table = pd.DataFrame(data = myip, columns = col)
     result = pipe.predict(table)
+
+    prob = pipe.predict_proba(table)[0]
+    stay = prob[0] * 100
+    leave = prob[1] * 100
+    
     if result[0] == 1:
          st.title("")
          st.markdown("""
@@ -188,16 +193,20 @@ if Press:
 
     st.markdown("""<h4 style = 'color : #00004D;'>📊 Graphical representation:</h4>""",unsafe_allow_html=True)
 
-    counts = df["Churn"].replace({0: "will stay", 1: "will leave"}).value_counts()
-    fig, ax = plt.subplots(figsize=(1,1))   # Small size
+    labels = ["Will Stay", "Will Leave"]
+    sizes = [stay, leave]
+
+    fig, ax = plt.subplots(figsize=(1.8, 1.8))
+
     ax.pie(
-    counts,
-    labels=counts.index,
+    sizes,
+    labels=labels,
     autopct="%1.1f%%",
-    colors=["#42A5F5", "#EF5350"],   # Blue, Red
+    colors=["#42A5F5", "#EF5350"],
     startangle=90,
-    textprops={"fontsize": 4}
+    textprops={"fontsize": 5}
     )
+
     ax.axis("equal")
     st.pyplot(fig)
 
