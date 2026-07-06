@@ -188,7 +188,7 @@ if Press:
 
     st.markdown("""<h4 style = 'color : #00004D;'>📊 Graphical representation:</h4>""",unsafe_allow_html=True)
 
-    counts = df["Churn"].replace({0: "not churned", 1: "churned"}).value_counts()
+    counts = df["Churn"].replace({0: "will stay", 1: "will leave"}).value_counts()
     fig, ax = plt.subplots(figsize=(1,1))   # Small size
     ax.pie(
     counts,
